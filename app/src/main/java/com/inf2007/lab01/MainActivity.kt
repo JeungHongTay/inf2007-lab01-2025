@@ -49,29 +49,37 @@ fun MainScreen() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 UserInput(
-                    name = name,
-                    onNameChange = { name = it }
+                    name = username,
+                    onNameChange = { username = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("nameInput") //tc1;test case 1
                 )
 
+                //tc3
                 Button(
                     onClick = {
                         if (username.isNotBlank()) {
+                            showGreeting = true
+                        }
+                        else{
                             showGreeting = false
                         }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .testTag("submitButton")
+                        .testTag("submitButton")//tc1
                 ) {
                     Text("Submit")
                 }
 
                 if (showGreeting) {
-                    Greeeting(
+                    Greeting(
                         name = username,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
+                            .testTag("greetingMsg") //tc1
                     )
 
                 }
@@ -95,10 +103,10 @@ fun UserInput(name: String, onNameChange: (String) -> Unit, modifier: Modifier =
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $username!, Welcome to InF2007!",
+        text = "Hello $name!, Welcome to InF2007!", //tc2
         modifier = Modifier
             .fillMaxWidth()
-            .testTag("greeting")
+            .testTag("greetingMsg") //tc2
     )
 }
 
